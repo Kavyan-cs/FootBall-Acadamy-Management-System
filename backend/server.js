@@ -16,7 +16,7 @@ app.use(cors(
 app.use(express.json());
 
 const playerRoutes = require("./routes/playerRoutes");
-app.use("/players", playerRoutes);
+app.use("/api/players", playerRoutes);
 
 app.get("/", (req, res) => {
   res.send("Football Academy API running");
