@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import api from "../lib/axios";
+import axios from "axios"; // use axios directly
 import toast from "react-hot-toast";
 import { Pencil, Trash2 } from "lucide-react";
-
-
 
 const PlayersPage = () => {
   const [players, setPlayers] = useState([]);
@@ -29,9 +27,11 @@ const PlayersPage = () => {
     assists: "",
   });
 
+  const BACKEND_URL = "https://football-backend-1of8.onrender.com";
+
   const fetchPlayers = async () => {
     try {
-      const res = await api.get("/players");
+      const res = await axios.get(`${BACKEND_URL}/api/players`);
       setPlayers(res.data);
     } catch (error) {
       console.log(error);
@@ -49,7 +49,7 @@ const PlayersPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await api.delete(`/players/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/players/${id}`);
       toast.success("Player deleted successfully");
       fetchPlayers();
     } catch (error) {
@@ -82,8 +82,8 @@ const PlayersPage = () => {
         marketValue,
       };
 
-      await api.put(
-        `/players/${editPlayer._id}`,
+      await axios.put(
+        `${BACKEND_URL}/api/players/${editPlayer._id}`,
         updatedPlayer
       );
 
@@ -121,7 +121,7 @@ const PlayersPage = () => {
         marketValue,
       };
 
-      await api.post("/players", formattedPlayer);
+      await axios.post(`${BACKEND_URL}/api/players`, formattedPlayer);
 
       toast.success("Player added successfully");
       setShowAddForm(false);
@@ -247,7 +247,6 @@ const PlayersPage = () => {
       )}
 
       {/* ALL MODALS BELOW REMAIN UNCHANGED */}
-      {/* (View, Add, Edit — exactly same as your original code) */}
 
     </div>
   );
