@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { Pencil, Trash2 } from "lucide-react";
