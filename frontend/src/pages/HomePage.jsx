@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
-import api from "../lib/axios";
+import axios from "axios"; // use axios directly
 
 const HomePage = () => {
   const [players, setPlayers] = useState([]);
+
+  const BACKEND_URL = "https://football-backend-1of8.onrender.com"; // Add backend URL here
 
   useEffect(() => {
     fetchPlayers();
   }, []);
 
   const fetchPlayers = async () => {
-  try {
-    const res = await api.get("/players");
-    setPlayers(res.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/players`);
+      setPlayers(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // ====== CALCULATIONS ======
-
   const totalPlayers = players.length;
 
   const totalMarketValue = players.reduce(
@@ -35,7 +36,6 @@ const HomePage = () => {
       : 0;
 
   // ===== SORT PLAYERS BY PERFORMANCE =====
-
   const sortPlayers = (position) => {
     return players
       .filter((p) => p.position === position)
@@ -47,7 +47,6 @@ const HomePage = () => {
   };
 
   // ===== GET BEST PLAYERS =====
-
   const getBestPlayer = (position) => {
     return sortPlayers(position)[0];
   };
@@ -60,7 +59,6 @@ const HomePage = () => {
   const cmPlayers = getTopTwoPlayers("CM");
 
   // ===== PLAYER CARD =====
-
   const PlayerCard = ({ player }) => {
     if (!player) {
       return (
