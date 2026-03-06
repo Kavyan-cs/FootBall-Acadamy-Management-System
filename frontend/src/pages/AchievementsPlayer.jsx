@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 
 const AchievementsPlayer = () => {
   const [players, setPlayers] = useState([]);
@@ -10,7 +10,7 @@ const AchievementsPlayer = () => {
 
   const fetchPlayers = async () => {
     try {
-      const res = await axios.get("/players");
+      const res = await api.get("/players");
       setPlayers(res.data);
     } catch (error) {
       console.log(error);
