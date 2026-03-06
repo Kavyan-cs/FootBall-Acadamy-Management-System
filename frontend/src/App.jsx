@@ -15,7 +15,7 @@ function App() {
 
       <div className="p-6">
         <Routes>
-          <Route path="/players" element={<HomePage />} />
+          <Route path="/api/players" element={<HomePage />} />
           <Route path="/playersPage" element={<PlayersPage />} />
           <Route path="/achievements" element={<AchievementsPlayer />} />
         </Routes>
