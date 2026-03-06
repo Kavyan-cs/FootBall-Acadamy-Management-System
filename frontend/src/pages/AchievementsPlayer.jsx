@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import api from "../lib/axios";
+import axios from "axios"; // use axios directly
 
 const AchievementsPlayer = () => {
   const [players, setPlayers] = useState([]);
+
+  const BACKEND_URL = "https://football-backend-1of8.onrender.com"; // Backend URL
 
   useEffect(() => {
     fetchPlayers();
@@ -10,7 +12,7 @@ const AchievementsPlayer = () => {
 
   const fetchPlayers = async () => {
     try {
-      const res = await api.get("/players");
+      const res = await axios.get(`${BACKEND_URL}/api/players`);
       setPlayers(res.data);
     } catch (error) {
       console.log(error);
