@@ -31,7 +31,7 @@ const PlayersPage = () => {
 
   const fetchPlayers = async () => {
     try {
-      const res = await axios.get("/players");
+      const res = await api.get("/players");
       setPlayers(res.data);
     } catch (error) {
       console.log(error);
@@ -49,7 +49,7 @@ const PlayersPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`/players/${id}`);
+      await api.delete(`/players/${id}`);
       toast.success("Player deleted successfully");
       fetchPlayers();
     } catch (error) {
@@ -82,7 +82,7 @@ const PlayersPage = () => {
         marketValue,
       };
 
-      await axios.put(
+      await api.put(
         `/players/${editPlayer._id}`,
         updatedPlayer
       );
@@ -121,7 +121,7 @@ const PlayersPage = () => {
         marketValue,
       };
 
-      await axios.post("/players", formattedPlayer);
+      await api.post("/players", formattedPlayer);
 
       toast.success("Player added successfully");
       setShowAddForm(false);
