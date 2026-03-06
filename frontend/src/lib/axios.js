@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "http://localhost:3000"
-   baseURL: "https://football-acadamy-management-system.onrender.com/api/players",
-  // https://football-acadamy-management-system.onrender.com/api/players
+  baseURL: "https://football-academy-management-system.onrender.com/api",
 });
 
 export default api;
