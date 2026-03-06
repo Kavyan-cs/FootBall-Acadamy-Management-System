@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { Pencil, Trash2 } from "lucide-react";
 
 const PlayersPage = () => {
-  const BACKEND_URL = "https://football-backend-1of8.onrender.com"; // backend URL
+  const BACKEND_URL = "https://football-backend-1of8.onrender.com";
 
   const [players, setPlayers] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -111,6 +111,7 @@ const PlayersPage = () => {
 
       await axios.post(`${BACKEND_URL}/api/players`, formattedPlayer);
       toast.success("Player added successfully");
+
       setShowAddForm(false);
       setNewPlayer({
         name: "",
@@ -120,6 +121,7 @@ const PlayersPage = () => {
         goals: "",
         assists: "",
       });
+
       fetchPlayers();
     } catch (error) {
       toast.error("Error adding player");
@@ -135,7 +137,6 @@ const PlayersPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-8 text-white">
 
-      {/* HEADER */}
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-4xl font-bold text-purple-400">Academy Players</h2>
         <button
@@ -146,7 +147,6 @@ const PlayersPage = () => {
         </button>
       </div>
 
-      {/* SEARCH + FILTER */}
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <input
           type="text"
@@ -155,6 +155,7 @@ const PlayersPage = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="input input-bordered w-full md:w-1/3 bg-gray-800 border-purple-500"
         />
+
         <select
           value={positionFilter}
           onChange={(e) => setPositionFilter(e.target.value)}
@@ -167,7 +168,6 @@ const PlayersPage = () => {
         </select>
       </div>
 
-      {/* PLAYER CARDS */}
       {filteredPlayers.length === 0 ? (
         <p className="text-gray-400">No players found</p>
       ) : (
@@ -179,16 +179,22 @@ const PlayersPage = () => {
             >
               <div className="card-body">
                 <h3 className="card-title text-indigo-400 text-xl">{player.name}</h3>
+
                 <div className="space-y-1 text-sm mt-2">
                   <p>Position: {player.position}</p>
                   <p>Goals: {player.goals}</p>
                   <p>Rating: {player.rating}</p>
                   <p>Market Value: €{player.marketValue}M</p>
                 </div>
+
                 <div className="card-actions justify-end mt-4 gap-2">
                   <button className="btn btn-sm btn-info" onClick={() => setSelectedPlayer(player)}>View</button>
-                  <button className="btn btn-sm btn-warning btn-circle" onClick={() => setEditPlayer(player)}><Pencil size={16} /></button>
-                  <button className="btn btn-sm btn-error btn-circle" onClick={() => handleDelete(player._id)}><Trash2 size={16} /></button>
+                  <button className="btn btn-sm btn-warning btn-circle" onClick={() => setEditPlayer(player)}>
+                    <Pencil size={16} />
+                  </button>
+                  <button className="btn btn-sm btn-error btn-circle" onClick={() => handleDelete(player._id)}>
+                    <Trash2 size={16} />
+                  </button>
                 </div>
               </div>
             </div>
@@ -202,61 +208,115 @@ const PlayersPage = () => {
           <div className="bg-gray-800 p-6 rounded-lg w-96 text-white">
             <h3 className="text-xl font-bold mb-4 text-purple-400">Add New Player</h3>
 
-            <input
-              type="text"
-              placeholder="Name"
+            <input type="text" placeholder="Name"
               value={newPlayer.name}
-              onChange={(e) => setNewPlayer({...newPlayer, name: e.target.value})}
+              onChange={(e)=>setNewPlayer({...newPlayer,name:e.target.value})}
               className="input input-bordered w-full mb-2"
             />
-            <input
-              type="number"
-              placeholder="Age"
+
+            <input type="number" placeholder="Age"
               value={newPlayer.age}
-              onChange={(e) => setNewPlayer({...newPlayer, age: e.target.value})}
+              onChange={(e)=>setNewPlayer({...newPlayer,age:e.target.value})}
               className="input input-bordered w-full mb-2"
             />
+
             <select
               value={newPlayer.position}
-              onChange={(e) => setNewPlayer({...newPlayer, position: e.target.value})}
+              onChange={(e)=>setNewPlayer({...newPlayer,position:e.target.value})}
               className="select select-bordered w-full mb-2"
             >
               <option value="">Select Position</option>
-              {positions.map((pos) => (
+              {positions.map((pos)=>(
                 <option key={pos} value={pos}>{pos}</option>
               ))}
             </select>
-            <input
-              type="number"
-              placeholder="Matches Played"
+
+            <input type="number" placeholder="Matches"
               value={newPlayer.matchesPlayed}
-              onChange={(e) => setNewPlayer({...newPlayer, matchesPlayed: e.target.value})}
+              onChange={(e)=>setNewPlayer({...newPlayer,matchesPlayed:e.target.value})}
               className="input input-bordered w-full mb-2"
             />
-            <input
-              type="number"
-              placeholder="Goals"
+
+            <input type="number" placeholder="Goals"
               value={newPlayer.goals}
-              onChange={(e) => setNewPlayer({...newPlayer, goals: e.target.value})}
+              onChange={(e)=>setNewPlayer({...newPlayer,goals:e.target.value})}
               className="input input-bordered w-full mb-2"
             />
-            <input
-              type="number"
-              placeholder="Assists"
+
+            <input type="number" placeholder="Assists"
               value={newPlayer.assists}
-              onChange={(e) => setNewPlayer({...newPlayer, assists: e.target.value})}
+              onChange={(e)=>setNewPlayer({...newPlayer,assists:e.target.value})}
               className="input input-bordered w-full mb-4"
             />
 
             <div className="flex justify-end gap-2">
               <button className="btn btn-success" onClick={handleAddPlayer}>Add Player</button>
-              <button className="btn" onClick={() => setShowAddForm(false)}>Cancel</button>
+              <button className="btn" onClick={()=>setShowAddForm(false)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* EDIT & VIEW MODALS remain unchanged (if you have them already) */}
+      {/* VIEW PLAYER */}
+      {selectedPlayer && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+          <div className="bg-gray-800 p-6 rounded-lg w-96">
+            <h3 className="text-xl font-bold mb-4 text-purple-400">Player Details</h3>
+
+            <p>Name: {selectedPlayer.name}</p>
+            <p>Age: {selectedPlayer.age}</p>
+            <p>Position: {selectedPlayer.position}</p>
+            <p>Matches: {selectedPlayer.matchesPlayed}</p>
+            <p>Goals: {selectedPlayer.goals}</p>
+            <p>Assists: {selectedPlayer.assists}</p>
+            <p>Rating: {selectedPlayer.rating}</p>
+            <p>Market Value: €{selectedPlayer.marketValue}M</p>
+
+            <div className="flex justify-end mt-4">
+              <button className="btn" onClick={()=>setSelectedPlayer(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT PLAYER */}
+      {editPlayer && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+          <div className="bg-gray-800 p-6 rounded-lg w-96">
+            <h3 className="text-xl font-bold mb-4 text-purple-400">Edit Player</h3>
+
+            <input value={editPlayer.name}
+              onChange={(e)=>setEditPlayer({...editPlayer,name:e.target.value})}
+              className="input input-bordered w-full mb-2"
+            />
+
+            <input type="number" value={editPlayer.age}
+              onChange={(e)=>setEditPlayer({...editPlayer,age:e.target.value})}
+              className="input input-bordered w-full mb-2"
+            />
+
+            <input type="number" value={editPlayer.matchesPlayed}
+              onChange={(e)=>setEditPlayer({...editPlayer,matchesPlayed:e.target.value})}
+              className="input input-bordered w-full mb-2"
+            />
+
+            <input type="number" value={editPlayer.goals}
+              onChange={(e)=>setEditPlayer({...editPlayer,goals:e.target.value})}
+              className="input input-bordered w-full mb-2"
+            />
+
+            <input type="number" value={editPlayer.assists}
+              onChange={(e)=>setEditPlayer({...editPlayer,assists:e.target.value})}
+              className="input input-bordered w-full mb-4"
+            />
+
+            <div className="flex justify-end gap-2">
+              <button className="btn btn-success" onClick={handleUpdate}>Save</button>
+              <button className="btn" onClick={()=>setEditPlayer(null)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
