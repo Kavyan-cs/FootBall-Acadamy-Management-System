@@ -8,12 +8,7 @@ const app = express();
 
 connectDB();
 
-app.use(cors(
-  {
-    // origin:`http://localhost:5173`
-    // origin:"*"
-  }
-));
+app.use(cors());
 app.use(express.json());
 
 const playerRoutes = require("./routes/playerRoutes");
@@ -24,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
- console.log(`Server running at Port: ${PORT}/`);
+  console.log(`Server running at Port: ${PORT}/`);
 });
