@@ -29,7 +29,7 @@ const PlayersPage = () => {
 
   const fetchPlayers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/players");
+      const res = await axios.get("/players");
       setPlayers(res.data);
     } catch (error) {
       console.log(error);
@@ -47,7 +47,7 @@ const PlayersPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3000/players/${id}`);
+      await axios.delete(`/players/${id}`);
       toast.success("Player deleted successfully");
       fetchPlayers();
     } catch (error) {
