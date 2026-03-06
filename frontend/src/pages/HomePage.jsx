@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 
 const HomePage = () => {
   const [players, setPlayers] = useState([]);
@@ -9,13 +9,13 @@ const HomePage = () => {
   }, []);
 
   const fetchPlayers = async () => {
-    try {
-      const res = await axios.get("/players");
-      setPlayers(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  try {
+    const res = await api.get("/players");
+    setPlayers(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   // ====== CALCULATIONS ======
 
