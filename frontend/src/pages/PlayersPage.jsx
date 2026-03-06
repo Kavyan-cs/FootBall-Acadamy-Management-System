@@ -3,7 +3,7 @@ import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { Pencil, Trash2 } from "lucide-react";
 
-axios.defaults.baseURL = "https://football-academy-management-system.onrender.com/api";
+
 
 const PlayersPage = () => {
   const [players, setPlayers] = useState([]);
